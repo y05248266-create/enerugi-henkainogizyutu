@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エネルギー変換の技術と資源</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for crisp presentation icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for clean Japanese typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for animations and tweaks -->
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+
+        /* Slide transition animations */
+        .slide-enter {
+            animation: fadeInRight 0.35s ease-out forwards;
+        }
+        .slide-exit {
+            animation: fadeOutLeft 0.35s ease-out forwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeOutLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+        }
+
+        /* Card bounce effect on hover */
+        .card-interactive {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -10px rgba(245, 158, 11, 0.25);
+        }
+
+        /* Pulse highlight for CTA button */
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 0 14px rgba(245, 158, 11, 0);
+            }
+        }
+        .cta-pulse {
+            animation: pulseGlow 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-amber-200">
+
+    <!-- Top Header -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-30 border-b-4 border-amber-500">
+        <div class="max-w-7xl mx-auto px-4 py-2 sm:px-6 flex items-center justify-between">
+            <!-- App Title & Badge -->
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-br from-amber-400 to-orange-500 text-slate-900 w-10 h-10 rounded-full flex items-center justify-center font-black text-xl shadow-inner">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+                        エネルギー変換の技術
+                        <span class="text-xs bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full font-bold hidden sm:inline-block">中学校技術科 デジタル教材</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Header Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Slide Index Button -->
+                <button onclick="openIndexModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1.5 transition active:scale-95" title="目次を開く">
+                    <i class="fa-solid fa-list-ul"></i>
+                    <span class="hidden md:inline">目次</span>
+                </button>
+
+                <!-- Fullscreen Toggle Button -->
+                <button onclick="toggleFullscreen()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-1.5 transition active:scale-95" title="全画面表示">
+                    <i class="fa-solid fa-expand" id="fullscreenIcon"></i>
+                    <span class="hidden md:inline" id="fullscreenText">大画面</span>
+                </button>
+
+                <!-- Current Slide Indicator -->
+                <div class="bg-slate-950 border border-amber-500/40 text-amber-300 px-3 py-1 rounded-full text-xs sm:text-sm font-mono font-bold">
+                    <span id="currentSlideNum">1</span> / <span id="totalSlideNum">8</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-800 h-2">
+            <div id="progressBar" class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 h-2 transition-all duration-300 ease-out" style="width: 12.5%;"></div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-3 py-4 sm:px-6 sm:py-6 flex flex-col justify-center">
+        
+        <!-- Slide Cards Wrapper -->
+        <div id="slideContainer" class="bg-white rounded-2xl shadow-xl border border-slate-200/80 p-5 sm:p-8 min-h-[540px] flex flex-col justify-between relative overflow-hidden transition-all">
+            
+            <!-- Dynamic Slide Content Inserted Here by JS -->
+            <div id="slideContent" class="slide-enter flex-grow flex flex-col justify-between">
+                <!-- Content generated via JavaScript -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <footer class="bg-white border-t border-slate-200 py-3 px-4 shadow-lg sticky bottom-0 z-20">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            
+            <!-- Prev Button -->
+            <button id="prevBtn" onclick="changeSlide(-1)" class="bg-slate-200 hover:bg-slate-300 text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed font-bold px-4 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 transition text-base active:scale-95">
+                <i class="fa-solid fa-chevron-left"></i>
+                <span class="hidden sm:inline">前へ</span>
+            </button>
+
+            <!-- Slide Dot Indicators -->
+            <div id="dotIndicators" class="flex items-center space-x-1.5 sm:space-x-2">
+                <!-- Dots populated by JS -->
+            </div>
+
+            <!-- Next Button -->
+            <button id="nextBtn" onclick="changeSlide(1)" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-4 sm:px-6 py-2.5 rounded-xl flex items-center gap-2 transition text-base shadow-md hover:shadow-lg active:scale-95">
+                <span class="hidden sm:inline">次へ</span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Mandatory Copyright Notice (Fixed Bottom Right) -->
+    <div class="fixed bottom-3 right-3 z-40 bg-slate-900/90 text-slate-200 backdrop-blur-md text-xs sm:text-sm font-semibold px-3 py-1.5 rounded-lg shadow-lg border border-slate-700 pointer-events-none">
+        ©2026 t-suzuki
+    </div>
+
+    <!-- Slide Index Modal -->
+    <div id="indexModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-200">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-100 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-200">
+                <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-amber-500"></i>
+                    学習の目次（スライド一覧）
+                </h2>
+                <button onclick="closeIndexModal()" class="text-slate-400 hover:text-slate-600 text-2xl p-1 rounded-lg hover:bg-slate-100">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div id="modalIndexList" class="py-4 grid grid-cols-1 sm:grid-cols-2 gap-3 overflow-y-auto flex-grow">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="pt-4 border-t border-slate-200 text-right">
+                <button onclick="closeIndexModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-2 rounded-xl text-sm">
+                    閉じる
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /*
+         * エネルギー変換の技術と資源 - 教育用スライド型プレゼンテーションWebアプリ
+         * 作成者: t-suzuki
+         */
+
+        // Web Audio API によるサウンド効果
+        const playSound = (freq = 440, type = 'sine', duration = 0.08) => {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = new AudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.08, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {
+                // Audio interaction safeguard
+            }
+        };
+
+        // 復習クイズ（5問データ）
+        const quizQuestions = [
+            {
+                q: "1. エネルギーとは何をする能力のこと？",
+                options: ["仕事をする能力", "物を破壊する能力", "熱を発し続ける能力"],
+                answer: 0,
+                desc: "エネルギーとは「仕事をする能力」のことです。形を変えることで生活に役立ちます。"
+            },
+            {
+                q: "2. 自然から直接得られる石油や太陽光などのエネルギー資源を何という？",
+                options: ["二次エネルギー", "一次エネルギー", "人工エネルギー"],
+                answer: 1,
+                desc: "自然界から直接得られるものを「一次エネルギー」、加工して使いやすくしたものを「二次エネルギー」と呼びます。"
+            },
+            {
+                q: "3. 化石燃料の中で「燃料費がとても安いが、発電時のCO₂排出量が多い」特徴を持つものは？",
+                options: ["石油", "LNG（液化天然ガス）", "石炭"],
+                answer: 2,
+                desc: "石炭は燃料費が安価ですが、CO₂排出量が最も多いのがデメリットです。"
+            },
+            {
+                q: "4. 日本の発電電力量に占める再生可能エネルギーの比率（2021年度）は約何％？",
+                options: ["20.2%", "43.6%", "67.9%"],
+                answer: 0,
+                desc: "日本の再エネ比率は約20.2%（2021年度）。カナダ(67.9%)やドイツ(43.6%)に比べ高めていく必要があります。"
+            },
+            {
+                q: "5. モーターを使って扇風機や電車を動かすエネルギー変換は何エネルギーへの変換？",
+                options: ["光エネルギー", "熱エネルギー", "動力（運動）エネルギー"],
+                answer: 2,
+                desc: "電気を使って機械を動かす変換は「動力（運動）エネルギー」への変換です。"
+            }
+        ];
+
+        let currentQuizIdx = 0;
+        let quizScore = 0;
+        let quizAnswered = false;
+
+        // スライド全データ構成
+        const slidesData = [
+            {
+                id: 1,
+                tag: "1. 本日の目標",
+                title: "エネルギー変換の技術を学ぼう！",
+                subtitle: "超エネルギー消費社会を生き抜くために必要な知識と技能を身につけよう",
+                render: () => `
+                    <div class="space-y-5 my-auto">
+                        <!-- Main Banner Goal -->
+                        <div class="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-slate-950 rounded-2xl p-5 shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-6 -bottom-6 text-slate-900/10 text-9xl font-black select-none pointer-events-none">GOAL</div>
+                            <span class="inline-block bg-slate-900 text-amber-300 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider mb-2">本日の目標</span>
+                            <h3 class="text-xl sm:text-2xl font-black leading-snug">
+                                私たちが普段使っているエネルギーへの理解を深め、技術の知識・技能を向上しよう
+                            </h3>
+                        </div>
+
+                        <!-- 3 Core Learning Points -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex items-start gap-3">
+                                <div class="bg-amber-500 text-slate-950 w-8 h-8 rounded-lg flex items-center justify-center font-black shrink-0">1</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-xs sm:text-sm">基礎的な知識・理解</h4>
+                                    <p class="text-[11px] text-slate-600 mt-0.5">エネルギー変換技術、電気機器、環境問題についての学習</p>
+                                </div>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 flex items-start gap-3">
+                                <div class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-black shrink-0">2</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-xs sm:text-sm">工作スキルの向上</h4>
+                                    <p class="text-[11px] text-slate-600 mt-0.5">電気機器の製作やはんだ付けなどの実技スキルの獲得</p>
+                                </div>
+                            </div>
+                            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 flex items-start gap-3">
+                                <div class="bg-emerald-600 text-white w-8 h-8 rounded-lg flex items-center justify-center font-black shrink-0">3</div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-xs sm:text-sm">安全に取り扱う態度</h4>
+                                    <p class="text-[11px] text-slate-600 mt-0.5">エネルギー変換機器を安全・適切に取り扱う知識と習慣</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Checklist -->
+                        <div class="bg-white border-2 border-slate-200 rounded-2xl p-4 space-y-2">
+                            <p class="font-bold text-slate-700 text-xs sm:text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-amber-500"></i>
+                                今日の達成チェックリスト（クリックしてチェックを入れよう！）
+                            </p>
+
+                            <label class="flex items-center gap-2.5 p-2 bg-slate-50 hover:bg-amber-50 rounded-lg cursor-pointer transition text-xs sm:text-sm">
+                                <input type="checkbox" onchange="playSound(600)" class="w-4 h-4 text-amber-500 rounded focus:ring-amber-400">
+                                <span class="font-medium text-slate-800">1. 一次エネルギーと二次エネルギーの違いを理解する</span>
+                            </label>
+
+                            <label class="flex items-center gap-2.5 p-2 bg-slate-50 hover:bg-amber-50 rounded-lg cursor-pointer transition text-xs sm:text-sm">
+                                <input type="checkbox" onchange="playSound(650)" class="w-4 h-4 text-amber-500 rounded focus:ring-amber-400">
+                                <span class="font-medium text-slate-800">2. 化石燃料（石炭・石油・LNG）の特徴と課題を知る</span>
+                            </label>
+
+                            <label class="flex items-center gap-2.5 p-2 bg-slate-50 hover:bg-amber-50 rounded-xl cursor-pointer transition text-xs sm:text-sm">
+                                <input type="checkbox" onchange="playSound(700)" class="w-4 h-4 text-amber-500 rounded focus:ring-amber-400">
+                                <span class="font-medium text-slate-800">3. 再生可能エネルギーの種類と日本の現状を学ぶ</span>
+                            </label>
+
+                            <label class="flex items-center gap-2.5 p-2 bg-slate-50 hover:bg-amber-50 rounded-xl cursor-pointer transition text-xs sm:text-sm">
+                                <input type="checkbox" onchange="playSound(750)" class="w-4 h-4 text-amber-500 rounded focus:ring-amber-400">
+                                <span class="font-medium text-slate-800">4. 電気エネルギーが「光・熱・動力・信号」へ変わる仕組みを理解する</span>
+                            </label>
+                        </div>
+                    </div>
+                `
+            },
+
+            {
+                id: 2,
+                tag: "2. 基礎知識",
+                title: "エネルギーと「一次・二次エネルギー」",
+                subtitle: "エネルギー＝「仕事をする能力」。自然の資源と加工されたエネルギー！",
+                render: () => `
+                    <div class="space-y-6 my-auto">
+                        <!-- Key Definition Banner -->
+                        <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white p-5 rounded-2xl shadow-md border-l-8 border-amber-400 flex items-center gap-4">
+                            <div class="text-4xl text-amber-400 shrink-0"><i class="fa-solid fa-atom"></i></div>
+                            <div>
+                                <h3 class="font-black text-lg sm:text-xl text-amber-300">エネルギーの定義</h3>
+                                <p class="text-xs sm:text-sm text-slate-200 mt-0.5">
+                                    エネルギーとは<b>「仕事をする能力」</b>のこと。形を変えること（<b>エネルギー変換</b>）で私たちの生活を豊かにしています。
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Grid Primary vs Secondary -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            
+                            <!-- Primary Energy Card -->
+                            <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-2xl p-5 relative overflow-hidden">
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">一次エネルギー</span>
+                                    <span class="text-xs font-semibold text-emerald-700">自然から得られる資源</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mb-3">加工される前に地球上に存在する生のエネルギー資源のこと。</p>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="bg-white p-2.5 rounded-xl border border-emerald-200 font-bold text-slate-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-fire text-orange-500"></i> 化石燃料 (石油・石炭・LNG)
+                                    </div>
+                                    <div class="bg-white p-2.5 rounded-xl border border-emerald-200 font-bold text-slate-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-sun text-amber-500"></i> 太陽光・風力・水力
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Secondary Energy Card -->
+                            <div class="bg-blue-50/70 border-2 border-blue-300 rounded-2xl p-5 relative overflow-hidden">
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">二次エネルギー</span>
+                                    <span class="text-xs font-semibold text-blue-700">使いやすく加工したもの</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mb-3">一次エネルギーを人間が扱いやすいように変換・加工した製品や電力。</p>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="bg-white p-2.5 rounded-xl border border-blue-200 font-bold text-slate-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-bolt text-yellow-500"></i> 電気（発電されたもの）
+                                    </div>
+                                    <div class="bg-white p-2.5 rounded-xl border border-blue-200 font-bold text-slate-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-gas-pump text-red-500"></i> ガソリン・灯油・都市ガス
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                `
+            },
+
+            {
+                id: 3,
+                tag: "3. 化石燃料",
+                title: "化石燃料の一長一短（長所と短所）",
+                subtitle: "現代社会の柱である化石燃料。それぞれの特徴を比べよう！",
+                render: () => `
+                    <div class="space-y-4 my-auto">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            
+                            <!-- Coal Card -->
+                            <div class="bg-amber-50/40 border border-amber-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
+                                <div>
+                                    <div class="flex items-center justify-between border-b border-amber-200 pb-2 mb-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-2xl">🪨</span>
+                                            <h3 class="font-black text-slate-800 text-lg">石炭</h3>
+                                        </div>
+                                        <span class="text-[10px] bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-bold">固体燃料</span>
+                                    </div>
+                                    <div class="space-y-2 text-xs">
+                                        <div class="bg-emerald-100/80 text-emerald-900 p-2.5 rounded-xl border border-emerald-200">
+                                            <span class="font-bold flex items-center gap-1 text-emerald-800 mb-0.5"><i class="fa-solid fa-circle-plus"></i> メリット</span>
+                                            ・燃料費がとても安い
+                                        </div>
+                                        <div class="bg-rose-100/80 text-rose-900 p-2.5 rounded-xl border border-rose-200">
+                                            <span class="font-bold flex items-center gap-1 text-rose-800 mb-0.5"><i class="fa-solid fa-circle-minus"></i> デメリット</span>
+                                            ・発電時のCO₂排出量が多い
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Petroleum Card -->
+                            <div class="bg-amber-50/40 border border-amber-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
+                                <div>
+                                    <div class="flex items-center justify-between border-b border-amber-200 pb-2 mb-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-2xl">🛢️</span>
+                                            <h3 class="font-black text-slate-800 text-lg">石油</h3>
+                                        </div>
+                                        <span class="text-[10px] bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-bold">液体燃料</span>
+                                    </div>
+                                    <div class="space-y-2 text-xs">
+                                        <div class="bg-emerald-100/80 text-emerald-900 p-2.5 rounded-xl border border-emerald-200">
+                                            <span class="font-bold flex items-center gap-1 text-emerald-800 mb-0.5"><i class="fa-solid fa-circle-plus"></i> メリット</span>
+                                            ・調達の柔軟性が高い<br><span class="text-[10px] text-emerald-700">（機動的な調達ができる）</span>
+                                        </div>
+                                        <div class="bg-rose-100/80 text-rose-900 p-2.5 rounded-xl border border-rose-200">
+                                            <span class="font-bold flex items-center gap-1 text-rose-800 mb-0.5"><i class="fa-solid fa-circle-minus"></i> デメリット</span>
+                                            ・燃料費が高い
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- LNG Card -->
+                            <div class="bg-amber-50/40 border border-amber-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-md transition">
+                                <div>
+                                    <div class="flex items-center justify-between border-b border-amber-200 pb-2 mb-3">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-2xl">💨</span>
+                                            <h3 class="font-black text-slate-800 text-base">LNG<span class="text-xs font-normal">（液化天然ガス）</span></h3>
+                                        </div>
+                                        <span class="text-[10px] bg-amber-200 text-amber-900 px-2 py-0.5 rounded font-bold">気体・液化</span>
+                                    </div>
+                                    <div class="space-y-2 text-xs">
+                                        <div class="bg-emerald-100/80 text-emerald-900 p-2.5 rounded-xl border border-emerald-200">
+                                            <span class="font-bold flex items-center gap-1 text-emerald-800 mb-0.5"><i class="fa-solid fa-circle-plus"></i> メリット</span>
+                                            ・化石燃料の中では発電時のCO₂排出量が少ない
+                                        </div>
+                                        <div class="bg-rose-100/80 text-rose-900 p-2.5 rounded-xl border border-rose-200">
+                                            <span class="font-bold flex items-center gap-1 text-rose-800 mb-0.5"><i class="fa-solid fa-circle-minus"></i> デメリット</span>
+                                            ・長期間大量保存が難しい<br>・調達の柔軟性が低い
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Alert Box -->
+                        <div class="bg-rose-50 border border-rose-200 text-rose-950 p-3 rounded-xl text-xs flex items-center gap-3">
+                            <i class="fa-solid fa-triangle-exclamation text-rose-600 text-xl shrink-0"></i>
+                            <div>
+                                <b>化石燃料共通の課題：</b> 地中に埋蔵されている資源のため、将来<b>枯渇（なくなるおそれ）</b>するリスクがあり、燃焼時のCO₂が地球温暖化の原因になります。
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            {
+                id: 4,
+                tag: "4. 再生可能エネルギー",
+                title: "地球にやさしい「再生可能エネルギー」",
+                subtitle: "自然の力でつくる永続的でクリーンなエネルギー資源！",
+                render: () => `
+                    <div class="space-y-4">
+                        <!-- Top Banner with Youtube Button -->
+                        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-4 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
+                            <div>
+                                <h3 class="font-black text-lg flex items-center gap-2">
+                                    <i class="fa-solid fa-leaf text-lime-300"></i> 再生可能エネルギーとは？
+                                </h3>
+                                <p class="text-xs text-emerald-100 mt-1">
+                                    太陽光や風力など、自然現象から繰り返し永続的に得られるエネルギー資源のこと。
+                                </p>
+                            </div>
+                            <a href="https://www.youtube.com/watch?v=AACXFMa_15w" target="_blank" rel="noopener noreferrer" 
+                               onclick="playSound(700)"
+                               class="shrink-0 bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow transition active:scale-95">
+                                <i class="fa-brands fa-youtube text-base"></i>
+                                参考動画をみる
+                            </a>
+                        </div>
+
+                        <!-- 5 Types Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-center flex flex-col items-center hover:scale-105 transition">
+                                <div class="text-3xl my-1">☀️</div>
+                                <h4 class="font-bold text-xs text-slate-800">太陽の光</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">ソーラーパネルで電気に変換</p>
+                            </div>
+
+                            <div class="bg-sky-50 border border-sky-200 rounded-xl p-3 text-center flex flex-col items-center hover:scale-105 transition">
+                                <div class="text-3xl my-1">🌀</div>
+                                <h4 class="font-bold text-xs text-slate-800">風の力</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">巨大な風車で発電機を回す</p>
+                            </div>
+
+                            <div class="bg-orange-50 border border-orange-200 rounded-xl p-3 text-center flex flex-col items-center hover:scale-105 transition">
+                                <div class="text-3xl my-1">♨️</div>
+                                <h4 class="font-bold text-xs text-slate-800">地球の熱</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">マグマの蒸気でタービンを回す</p>
+                            </div>
+
+                            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center flex flex-col items-center hover:scale-105 transition">
+                                <div class="text-3xl my-1">🌲</div>
+                                <h4 class="font-bold text-xs text-slate-800">植物・ゴミ・フン</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">バイオマス燃料として活用</p>
+                            </div>
+
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-center flex flex-col items-center hover:scale-105 transition col-span-2 sm:col-span-1">
+                                <div class="text-3xl my-1">💧</div>
+                                <h4 class="font-bold text-xs text-slate-800">川の流れの力</h4>
+                                <p class="text-[10px] text-slate-500 mt-1">ダムなどの水流で水力発電</p>
+                            </div>
+                        </div>
+
+                        <!-- Comparison Box -->
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs space-y-2">
+                            <div class="font-bold text-slate-800 flex items-center gap-2 text-sm border-b border-slate-200 pb-2">
+                                <i class="fa-solid fa-scale-balanced text-emerald-600"></i>
+                                化石燃料 vs 再生可能エネルギーの比較
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                                <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                    <span class="font-bold text-rose-600 block mb-1">従来のエネルギー（石油・石炭・原子力）</span>
+                                    ・CO₂排出による地球温暖化<br>
+                                    ・資源枯渇の不安<br>
+                                    ・事故や廃棄物処理のリスク
+                                </div>
+                                <div class="bg-white p-3 rounded-xl border border-slate-200">
+                                    <span class="font-bold text-emerald-600 block mb-1">再生可能エネルギー（自然の力）</span>
+                                    ・温室効果ガス（CO₂）を出さない<br>
+                                    ・永続的に利用可能<br>
+                                    ・国内で自給できる安全なエネルギー
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            {
+                id: 5,
+                tag: "5. 主要国の比較",
+                title: "主要国の再生可能エネルギー比率",
+                subtitle: "世界各国と日本の発電電力量における割合（2020年 / 日本2021年度）",
+                render: () => `
+                    <div class="space-y-4 my-auto">
+                        <div class="bg-slate-900 text-white p-3 rounded-xl flex items-center justify-between text-xs">
+                            <span class="font-semibold flex items-center gap-2">
+                                <i class="fa-solid fa-chart-column text-amber-400"></i>
+                                発電電力に占める再生可能エネルギーの割合
+                            </span>
+                            <span class="text-slate-400 text-[11px]">出典: 資源エネルギー庁「日本のエネルギー2022」</span>
+                        </div>
+
+                        <!-- Bar Graph List -->
+                        <div class="space-y-2 text-xs">
+                            <!-- Canada -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-20 font-bold text-slate-700 truncate">🇨🇦 カナダ</span>
+                                <div class="flex-grow bg-slate-100 rounded-full h-5 overflow-hidden flex border border-slate-200">
+                                    <div class="bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-end pr-2 transition-all duration-500" style="width: 67.9%;">67.9%</div>
+                                    <div class="bg-rose-300 text-rose-950 text-[10px] flex items-center justify-center" style="width: 16.8%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Germany -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-20 font-bold text-slate-700 truncate">🇩🇪 ドイツ</span>
+                                <div class="flex-grow bg-slate-100 rounded-full h-5 overflow-hidden flex border border-slate-200">
+                                    <div class="bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-end pr-2 transition-all duration-500" style="width: 43.6%;">43.6%</div>
+                                    <div class="bg-rose-300 text-rose-950 text-[10px] flex items-center justify-center" style="width: 45.2%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- UK -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-20 font-bold text-slate-700 truncate">🇬🇧 イギリス</span>
+                                <div class="flex-grow bg-slate-100 rounded-full h-5 overflow-hidden flex border border-slate-200">
+                                    <div class="bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-end pr-2 transition-all duration-500" style="width: 43.1%;">43.1%</div>
+                                    <div class="bg-rose-300 text-rose-950 text-[10px] flex items-center justify-center" style="width: 40.8%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Italy -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-20 font-bold text-slate-700 truncate">🇮🇹 イタリア</span>
+                                <div class="flex-grow bg-slate-100 rounded-full h-5 overflow-hidden flex border border-slate-200">
+                                    <div class="bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-end pr-2 transition-all duration-500" style="width: 41.5%;">41.5%</div>
+                                    <div class="bg-rose-300 text-rose-950 text-[10px] flex items-center justify-center" style="width: 58.4%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- China -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-20 font-bold text-slate-700 truncate">🇨🇳 中国</span>
+                                <div class="flex-grow bg-slate-100 rounded-full h-5 overflow-hidden flex border border-slate-200">
+                                    <div class="bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-end pr-2 transition-all duration-500" style="width: 27.7%;">27.7%</div>
+                                    <div class="bg-rose-300 text-rose-950 text-[10px] flex items-center justify-center" style="width: 67.7%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- France -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-20 font-bold text-slate-700 truncate">🇫🇷 フランス</span>
+                                <div class="flex-grow bg-slate-100 rounded-full h-5 overflow-hidden flex border border-slate-200">
+                                    <div class="bg-amber-500 text-slate-950 font-bold text-[10px] flex items-center justify-end pr-2 transition-all duration-500" style="width: 23.8%;">23.8%</div>
+                                    <div class="bg-emerald-300 text-emerald-950 text-[10px] flex items-center justify-center" style="width: 67.0%;">原発67.0%</div>
+                                </div>
+                            </div>
+
+                            <!-- Japan Highlighted -->
+                            <div class="flex items-center gap-2 p-1.5 bg-amber-100/60 rounded-xl border border-amber-300">
+                                <span class="w-20 font-black text-red-600 truncate flex items-center gap-1">🇯🇵 日本</span>
+                                <div class="flex-grow bg-white rounded-full h-6 overflow-hidden flex border border-amber-400 shadow-inner">
+                                    <div class="bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-end pr-2 transition-all duration-500" style="width: 20.2%;">20.2%</div>
+                                    <div class="bg-rose-400 text-white text-[10px] font-bold flex items-center justify-center" style="width: 72.8%;">化石72.8%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Legend -->
+                        <div class="flex items-center justify-center gap-4 text-[11px] font-bold pt-1">
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-amber-500 rounded"></span> 再生可能エネルギー</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-rose-400 rounded"></span> 化石燃料（天然ガス・石炭・石油等）</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-emerald-400 rounded"></span> 原子力</span>
+                        </div>
+                    </div>
+                `
+            },
+
+            {
+                id: 6,
+                tag: "6. エネルギー変換の例",
+                title: "身近なエネルギー変換の流れ",
+                subtitle: "資源から加工され、生活の中で4つのエネルギーに姿を変える！",
+                render: () => `
+                    <div class="space-y-4 my-auto">
+                        <!-- Flow Diagram -->
+                        <div class="bg-slate-100 p-3 rounded-xl border border-slate-200 text-xs flex items-center justify-between">
+                            <span class="font-bold text-slate-700">【変換の流れ】</span>
+                            <span class="text-slate-600">一次資源（石油等） ➔ 加工（電気・ガス等） ➔ 生活での活用</span>
+                        </div>
+
+                        <!-- 4 Conversion Modes Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="bg-yellow-50/80 border-2 border-yellow-300 rounded-2xl p-4 text-center hover:scale-105 transition flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 mx-auto rounded-full bg-yellow-200 text-yellow-700 flex items-center justify-center text-2xl mb-2">
+                                        <i class="fa-solid fa-lightbulb"></i>
+                                    </div>
+                                    <span class="bg-yellow-400 text-slate-900 font-black text-xs px-2 py-0.5 rounded-full">光</span>
+                                    <h4 class="font-bold text-slate-800 text-sm mt-2">光エネルギー</h4>
+                                    <p class="text-[11px] text-slate-500 mt-1">部屋を明るく照らす</p>
+                                </div>
+                                <div class="mt-3 pt-2 border-t border-yellow-200 text-[10px] text-yellow-900 font-semibold">
+                                    例: LED電球、液晶画面
+                                </div>
+                            </div>
+
+                            <div class="bg-orange-50/80 border-2 border-orange-300 rounded-2xl p-4 text-center hover:scale-105 transition flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 mx-auto rounded-full bg-orange-200 text-orange-700 flex items-center justify-center text-2xl mb-2">
+                                        <i class="fa-solid fa-temperature-arrow-up"></i>
+                                    </div>
+                                    <span class="bg-orange-400 text-slate-900 font-black text-xs px-2 py-0.5 rounded-full">熱</span>
+                                    <h4 class="font-bold text-slate-800 text-sm mt-2">熱エネルギー</h4>
+                                    <p class="text-[11px] text-slate-500 mt-1">物を温めたり加熱する</p>
+                                </div>
+                                <div class="mt-3 pt-2 border-t border-orange-200 text-[10px] text-orange-900 font-semibold">
+                                    例: 電気ストーブ、アイロン
+                                </div>
+                            </div>
+
+                            <div class="bg-blue-50/80 border-2 border-blue-300 rounded-2xl p-4 text-center hover:scale-105 transition flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 mx-auto rounded-full bg-blue-200 text-blue-700 flex items-center justify-center text-2xl mb-2">
+                                        <i class="fa-solid fa-gear"></i>
+                                    </div>
+                                    <span class="bg-blue-500 text-white font-black text-xs px-2 py-0.5 rounded-full">動力</span>
+                                    <h4 class="font-bold text-slate-800 text-sm mt-2">動力（運動）</h4>
+                                    <p class="text-[11px] text-slate-500 mt-1">モーターで物を動かす</p>
+                                </div>
+                                <div class="mt-3 pt-2 border-t border-blue-200 text-[10px] text-blue-900 font-semibold">
+                                    例: 電車、扇風機、洗濯機
+                                </div>
+                            </div>
+
+                            <div class="bg-purple-50/80 border-2 border-purple-300 rounded-2xl p-4 text-center hover:scale-105 transition flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 mx-auto rounded-full bg-purple-200 text-purple-700 flex items-center justify-center text-2xl mb-2">
+                                        <i class="fa-solid fa-wave-square"></i>
+                                    </div>
+                                    <span class="bg-purple-500 text-white font-black text-xs px-2 py-0.5 rounded-full">信号</span>
+                                    <h4 class="font-bold text-slate-800 text-sm mt-2">音・情報信号</h4>
+                                    <p class="text-[11px] text-slate-500 mt-1">音やデータを伝える</p>
+                                </div>
+                                <div class="mt-3 pt-2 border-t border-purple-200 text-[10px] text-purple-900 font-semibold">
+                                    例: スピーカー、スマホ
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+
+            {
+                id: 7,
+                tag: "7. 復習クイズ",
+                title: "定着確認！エネルギー復習クイズ（全5問）",
+                subtitle: "今日学んだ知識をクイズで確かめよう！全問正解を目指して挑戦！",
+                render: () => renderQuizSlide()
+            },
+
+            {
+                id: 8,
+                tag: "8. まとめ＆体験",
+                title: "学習ゲームに挑戦してみよう！",
+                subtitle: "オンライン教材で楽しくゲームをして理解を深めよう！",
+                render: () => `
+                    <div class="space-y-5 my-auto">
+                        <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 shadow-xl border-2 border-amber-400/40 text-center relative overflow-hidden">
+                            <div class="relative z-10 max-w-2xl mx-auto space-y-4">
+                                <span class="bg-amber-500 text-slate-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider inline-block shadow">
+                                    WEB体験ゲームで高得点を目指そう！
+                                </span>
+                                
+                                <h3 class="text-xl sm:text-2xl font-black text-amber-300">
+                                    身近なエネルギー変換 ゲームコンテンツ
+                                </h3>
+
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    身近な機器がどのようにエネルギーを変換して動いているか、ゲームを通して学習しましょう！
+                                </p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                                    <!-- Game 1 -->
+                                    <a href="https://y05248266-create.github.io/enerugi-henkansinkeisuizyaku/" target="_blank" rel="noopener noreferrer" 
+                                       onclick="playSound(800)"
+                                       class="cta-pulse bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-sm px-5 py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2 active:scale-95">
+                                        <i class="fa-solid fa-clone text-lg"></i>
+                                        エネルギー変換神経衰弱
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                    </a>
+
+                                    <!-- Game 2 -->
+                                    <a href="https://y05248266-create.github.io/enerugi-henkai/" target="_blank" rel="noopener noreferrer" 
+                                       onclick="playSound(850)"
+                                       class="cta-pulse bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 text-white font-black text-sm px-5 py-4 rounded-xl transition shadow-lg flex items-center justify-center gap-2 active:scale-95">
+                                        <i class="fa-solid fa-puzzle-piece text-lg"></i>
+                                        エネルギー変換パズル
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                                    </a>
+                                </div>
+                                <p class="text-xs text-amber-200 font-bold">どちらも高得点目指しましょう！ これは学習です！！</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        ];
+
+        // クイズUIのレンダリング
+        function renderQuizSlide() {
+            if (currentQuizIdx >= quizQuestions.length) {
+                // スコア結果画面
+                return `
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center space-y-4 my-auto">
+                        <div class="text-5xl">🏆</div>
+                        <h3 class="text-2xl font-black text-slate-800">クイズ終了！</h3>
+                        <p class="text-lg font-bold text-amber-600">
+                            あなたのスコア: <span class="text-3xl text-slate-900">${quizScore}</span> / ${quizQuestions.length} 問正解
+                        </p>
+                        <p class="text-xs text-slate-600">
+                            ${quizScore === 5 ? '完璧です！素晴らしい！エネルギーマスターになれました！' : '惜しい！もう一度チャレンジして全問正解を目指そう！'}
+                        </p>
+                        <button onclick="resetQuiz()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition shadow active:scale-95 text-sm">
+                            <i class="fa-solid fa-rotate-right mr-1.5"></i> もう一度挑戦する
+                        </button>
+                    </div>
+                `;
+            }
+
+            const qData = quizQuestions[currentQuizIdx];
+            return `
+                <div class="space-y-4 my-auto">
+                    <!-- Quiz Progress Header -->
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-600 border-b border-slate-200 pb-2">
+                        <span class="flex items-center gap-1.5 text-amber-600">
+                            <i class="fa-solid fa-circle-question"></i>
+                            第 ${currentQuizIdx + 1} 問 / 全 ${quizQuestions.length} 問
+                        </span>
+                        <span class="bg-slate-200 px-2.5 py-0.5 rounded-full text-slate-700">現在のスコア: ${quizScore}</span>
+                    </div>
+
+                    <!-- Question Box -->
+                    <div class="bg-amber-50/60 border border-amber-200 rounded-2xl p-4">
+                        <h3 class="font-bold text-slate-800 text-base sm:text-lg mb-3">
+                            ${qData.q}
+                        </h3>
+
+                        <!-- Options -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5" id="interactiveQuizOptions">
+                            ${qData.options.map((opt, i) => `
+                                <button onclick="answerInteractiveQuiz(${i})" class="quiz-opt-btn bg-white hover:bg-amber-100/70 border border-slate-300 rounded-xl p-3 text-xs sm:text-sm font-semibold text-slate-700 transition text-left flex items-center justify-between">
+                                    <span>${opt}</span>
+                                    <i class="fa-regular fa-circle text-slate-300 text-xs"></i>
+                                </button>
+                            `).join('')}
+                        </div>
+
+                        <!-- Result Explanations -->
+                        <div id="interactiveQuizResult" class="hidden mt-3 p-3 rounded-xl text-xs font-semibold leading-relaxed"></div>
+                    </div>
+
+                    <!-- Next Quiz Btn -->
+                    <div class="text-right">
+                        <button id="nextQuizBtn" onclick="nextQuizQuestion()" disabled class="bg-slate-300 text-slate-500 cursor-not-allowed font-bold px-5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 ml-auto">
+                            <span>次の問題へ</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function answerInteractiveQuiz(selectedIdx) {
+            if (quizAnswered) return;
+            quizAnswered = true;
+
+            const qData = quizQuestions[currentQuizIdx];
+            const isCorrect = selectedIdx === qData.answer;
+            const resBox = document.getElementById('interactiveQuizResult');
+            const nextBtn = document.getElementById('nextQuizBtn');
+            const btns = document.querySelectorAll('#interactiveQuizOptions .quiz-opt-btn');
+
+            btns.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.add('opacity-60');
+                if (idx === qData.answer) {
+                    btn.classList.remove('opacity-60', 'bg-white');
+                    btn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-600');
+                } else if (idx === selectedIdx && !isCorrect) {
+                    btn.classList.remove('opacity-60', 'bg-white');
+                    btn.classList.add('bg-rose-500', 'text-white', 'border-rose-600');
+                }
+            });
+
+            resBox.classList.remove('hidden');
+            if (isCorrect) {
+                quizScore++;
+                playSound(880, 'triangle', 0.25);
+                resBox.className = "mt-3 p-3 rounded-xl text-xs font-semibold leading-relaxed bg-emerald-100 text-emerald-950 border border-emerald-300";
+                resBox.innerHTML = `⭕ <b>正解！</b> ${qData.desc}`;
+            } else {
+                playSound(220, 'sawtooth', 0.25);
+                resBox.className = "mt-3 p-3 rounded-xl text-xs font-semibold leading-relaxed bg-rose-100 text-rose-950 border border-rose-300";
+                resBox.innerHTML = `❌ <b>不正解！</b> 正解は「${qData.options[qData.answer]}」でした。<br>${qData.desc}`;
+            }
+
+            nextBtn.disabled = false;
+            nextBtn.className = "bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs sm:text-sm transition flex items-center gap-1.5 ml-auto shadow active:scale-95";
+        }
+
+        function nextQuizQuestion() {
+            currentQuizIdx++;
+            quizAnswered = false;
+            renderSlide(currentSlideIndex);
+        }
+
+        function resetQuiz() {
+            currentQuizIdx = 0;
+            quizScore = 0;
+            quizAnswered = false;
+            renderSlide(currentSlideIndex);
+        }
+
+        let currentSlideIndex = 0;
+        const totalSlides = slidesData.length;
+
+        // UI DOM Elements
+        const slideContentEl = document.getElementById('slideContent');
+        const currentSlideNumEl = document.getElementById('currentSlideNum');
+        const totalSlideNumEl = document.getElementById('totalSlideNum');
+        const progressBarEl = document.getElementById('progressBar');
+        const dotIndicatorsEl = document.getElementById('dotIndicators');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indexModal = document.getElementById('indexModal');
+        const modalIndexList = document.getElementById('modalIndexList');
+
+        // スライド描画処理
+        function renderSlide(index) {
+            const slide = slidesData[index];
+            
+            // Header slide info
+            currentSlideNumEl.textContent = index + 1;
+            totalSlideNumEl.textContent = totalSlides;
+
+            // Progress bar calculation
+            const progressPercent = ((index + 1) / totalSlides) * 100;
+            progressBarEl.style.width = `${progressPercent}%`;
+
+            // HTML Structure for slide header & dynamic content
+            slideContentEl.className = "slide-enter flex-grow flex flex-col justify-between";
+            slideContentEl.innerHTML = `
+                <div>
+                    <!-- Slide Tag Badge -->
+                    <div class="mb-2">
+                        <span class="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full inline-flex items-center gap-1.5 border border-amber-300">
+                            <i class="fa-solid fa-bookmark text-amber-600"></i>
+                            ${slide.tag}
+                        </span>
+                    </div>
+                    
+                    <!-- Slide Title & Subtitle -->
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                        ${slide.title}
+                    </h2>
+                    <p class="text-slate-500 text-xs sm:text-sm mt-1 mb-4 font-medium">
+                        ${slide.subtitle}
+                    </p>
+
+                    <!-- Slide Main Inner View -->
+                    ${slide.render()}
+                </div>
+            `;
+
+            // Navigation buttons state
+            prevBtn.disabled = index === 0;
+            if (index === totalSlides - 1) {
+                nextBtn.classList.remove('bg-amber-500', 'hover:bg-amber-600', 'text-slate-950');
+                nextBtn.classList.add('bg-slate-700', 'hover:bg-slate-800', 'text-white');
+            } else {
+                nextBtn.classList.remove('bg-slate-700', 'hover:bg-slate-800', 'text-white');
+                nextBtn.classList.add('bg-amber-500', 'hover:bg-amber-600', 'text-slate-950');
+            }
+
+            // Update dot indicators
+            updateDots(index);
+        }
+
+        // ドットインジケーターの作成＆更新
+        function createDots() {
+            dotIndicatorsEl.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all duration-200 ${i === currentSlideIndex ? 'bg-amber-500 w-6' : 'bg-slate-300 hover:bg-slate-400'}`;
+                dot.title = `スライド ${i + 1}`;
+                dot.onclick = () => jumpToSlide(i);
+                dotIndicatorsEl.appendChild(dot);
+            }
+        }
+
+        function updateDots(activeIndex) {
+            const dots = dotIndicatorsEl.children;
+            for (let i = 0; i < dots.length; i++) {
+                if (i === activeIndex) {
+                    dots[i].className = "w-6 h-3 bg-amber-500 rounded-full transition-all duration-200";
+                } else {
+                    dots[i].className = "w-3 h-3 bg-slate-300 hover:bg-slate-400 rounded-full transition-all duration-200";
+                }
+            }
+        }
+
+        // スライド切り替え関数
+        function changeSlide(direction) {
+            const newIndex = currentSlideIndex + direction;
+            if (newIndex >= 0 && newIndex < totalSlides) {
+                playSound(500 + direction * 100);
+                currentSlideIndex = newIndex;
+                renderSlide(currentSlideIndex);
+            }
+        }
+
+        function jumpToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                playSound(550);
+                currentSlideIndex = index;
+                renderSlide(currentSlideIndex);
+                closeIndexModal();
+            }
+        }
+
+        // 目次モーダル操作
+        function openIndexModal() {
+            playSound(600);
+            modalIndexList.innerHTML = slidesData.map((s, idx) => `
+                <button onclick="jumpToSlide(${idx})" class="p-3 text-left rounded-xl border ${idx === currentSlideIndex ? 'border-amber-500 bg-amber-50/80 font-bold' : 'border-slate-200 hover:bg-slate-50'} transition flex items-center justify-between group">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 block">${s.tag}</span>
+                        <span class="text-sm text-slate-800">${s.title}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:text-amber-500 transition"></i>
+                </button>
+            `).join('');
+
+            indexModal.classList.remove('hidden');
+            setTimeout(() => {
+                indexModal.classList.remove('opacity-0');
+            }, 10);
+        }
+
+        function closeIndexModal() {
+            indexModal.classList.add('opacity-0');
+            setTimeout(() => {
+                indexModal.classList.add('hidden');
+            }, 200);
+        }
+
+        // フルスクリーン切り替え
+        function toggleFullscreen() {
+            playSound(650);
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {});
+                document.getElementById('fullscreenIcon').className = "fa-solid fa-compress";
+                document.getElementById('fullscreenText').textContent = "標準";
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.getElementById('fullscreenIcon').className = "fa-solid fa-expand";
+                    document.getElementById('fullscreenText').textContent = "大画面";
+                }
+            }
+        }
+
+        // キーボード操作サポート
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'Escape') {
+                closeIndexModal();
+            }
+        });
+
+        // アプリ初期化処理
+        window.addEventListener('DOMContentLoaded', () => {
+            createDots();
+            renderSlide(currentSlideIndex);
+        });
+    </script>
+</body>
+</html>
